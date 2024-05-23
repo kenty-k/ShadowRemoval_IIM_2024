@@ -2,7 +2,28 @@
 
 This repository is a participation code for the Image Shadow Removal Challenge of the [NTIRE 2024 challenges](https://cvlai.net/ntire/2024/).
 
+## A Hybrid Approach to Shadow Removal: Fusing Deterministic and Probabilistic Models
+![architecture](architecture_ntire2024.png)
+### Methodology
+In this project, we present a novel hybrid approach for shadow removal that combines the strengths of deterministic and probabilistic models to achieve high-quality results with improved computational efficiency and color consistency.
 
+### Deterministic Model
+We begin by applying a deterministic method for initial shadow removal. Specifically, we use the method developed by the IIM TTI team, which was a top performer in the NTIRE 2023 Image Shadow Removal Challenge. This method requires a shadow detection step, for which we use SASMA. The deterministic approach provides a solid foundation but tends to produce blurry images, necessitating further refinement.
+
+### Diffusion Model
+To enhance the initial results, we incorporate a diffusion model based on recent advancements. Our diffusion model, inspired by the NTIRE 2023 Challenge winner's approach, utilizes NAFNet instead of the traditional U-Net for noise removal. This modification addresses the high computational cost and training difficulty typically associated with diffusion models.
+
+Key improvements in our diffusion model include:
+
+1. Conditioned Diffusion Steps: Instead of starting from random noise, our model begins from the output of the deterministic shadow removal method. This approach reduces computational cost and maintains better global color consistency.
+
+2. Conditioning with Shadow Information: Each noise removal step is conditioned on the input image and its shadow mask, which significantly enhances the Peak Signal-to-Noise Ratio (PSNR) and Learned Perceptual Image Patch Similarity (LPIPS) of the final output.
+
+3. Sigmoid Noise Scheduler: We use a sigmoid noise scheduler instead of a linear one, which has been empirically validated to improve performance.
+
+4. Empirical Step Optimization: The optimal number of diffusion steps was determined through extensive experimentation to balance quality and efficiency.
+
+This hybrid approach leverages the deterministic model's initial accuracy and the diffusion model's refinement capabilities, resulting in high-quality, computationally efficient shadow removal.
 ## Datasets
 datasets were distributed to those who participated in the competition. [Competition page](https://codalab.lisn.upsaclay.fr/competitions/17546)
 
